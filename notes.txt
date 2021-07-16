@@ -1,0 +1,122 @@
+Deployment 
+  Environment 
+  Dependencies
+  App Files
+
+Manually not scalable 
+
+Production/Deployment different in unintended ways
+
+Bundle application with environment and deploy as a unit 
+
+Virtual Machines/Containers 
+
+Environment/Dependencies/App Files deployed as a unit 
+
+Containers: lightweight way of deploying env/dep/files as a unit
+
+Both can be used to horizontally scale an application
+
+Multiple containers/VMs can be run on same machine but containers funning on same machine share same low-level operating system kernel. 
+
+Container:
+  OS level virtualization allows run multiple isolated proccesses in parallel. 
+
+  Container is an isolated process consisting of: 
+    1. application code 
+    2. required dependencies
+    3. necessary runtime environment to run application
+
+  Each container is an independent component that can run on it's own and moved from environment to environment. 
+  
+  Benefits of containers
+    Easier for deveopers to create/deploy/run apps
+    Containers share single kernel and application libraries
+    Less system overhead compared to VMs
+
+How to create containers? 
+
+Several platforms (Container runtime/engines) allow to create containers 
+
+Ex Docker, CRI-O, OpenVZ
+
+Containers are a light-weight option to bundle application with it's environment. 
+
+Virtual Machines 
+  Simulate a complete machine 
+  Own operating system 
+  Not tied to a single executable
+
+  App App  App 
+  OS  OS   OS
+  Hypervisor
+  Infrastructure
+
+  VM is like a complete computer 
+    Own operating system and virtual hardware 
+    Single physical machine can run many virutal machines 
+    Virtualize an entire machine, but resource-intensive
+
+VMs managed on a host machine: 
+Host operating system runs the VMs using a hypervisor (creates/manages the VMs)
+
+Containers managed on a host machine:
+  Containers bundle application with dependencies. 
+  Containers do not have separate Operating System or virtualized hardware. 
+  Containers share a single operating system kernel.
+  Containers are managed by a container manager 
+
+How to create VMs? 
+  use one of the following Hypervisors
+    Microsoft Hyper-V
+    Oracle VM VirtualBox
+    VMWare
+    Parallels Desktop
+
+  or Cloud service providers offer ability to create VM on their infrastructure
+    AWS EC2
+    GCP Compute Engines
+    Azure Virutal Machines 
+
+Problem with VMs
+  VMs work well for scaling applications they can be resource intensive because they viertualize an entire machine.
+
+Containers are light-weight becaues they run on the shared host OS instead of virtualizing an enitrre OS and system's resources.No operating systems or virtual hardware in container model. 
+
+Recap differences
+
+1. Underlying OS
+  VMs: One host, many VMs. Each VM has it's own OS
+  Containers: Shared host, many guests
+
+2. Management software
+  VMs: hypervisor (ex VirtualBox)
+  C: container manager (ex Docker)
+
+3. Resource requirements
+  VMs: heavy
+  C: light
+
+4. Speed
+  VMs: slower
+  C: faster
+
+5. Flexibility in chose of OS s/w and h/w configuration
+  VMs: total flexibility
+  C: limited flexibility
+
+6. Resource constraint
+  VMs: Yes. Cannot use h/w resources beyond what is allocated while creating VM. 
+  C: No resource constraint. use as much of a resource as host's kernel scheduler allows 
+
+Summary of Benefits of using Containers vs VMs
+
+1. Size: Containers much smaller than VMs, run as isolated proccesses vs virtualized hardware. VMs can be in GBs, while containers are in MBs. 
+
+2. Speed: Virtual Machines can be slow to boot, takes minutes to launch. Container spawns more quickly, typically within seconds. 
+
+3. Composability: Containers designed to be programmatically built and defined as source code. VMs are replicas of conventional computer system. 
+
+***Shared kernels enable containers to be lightweight***
+
+
