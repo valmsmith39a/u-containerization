@@ -161,8 +161,183 @@ Docker vocab
 
   Docker engine: Software that runs Docker locally
 
-    Docker DAEMON
+    Docker DAEMON: manages images, containers, networks and volumes 
 
     API
 
-    Docker Client
+    Docker Client: command line or desktop app 
+
+  Docker Image: Instructions for creating a container, immutable template for a container. 
+    Image has all instructions needed for creating a container 
+
+    Single image can be used for creating multiple containers 
+
+    Images stored in Docker Registries 
+
+  Docker Container: is a running instance of the image 
+
+  Docker Registry: Where images are stored 
+  
+    Can be public or private 
+
+    Docker Hub - public registry 
+
+  Volumes:     
+    Containers not designed for persistent data 
+    
+    Started / Stopped as demand requires 
+    
+    Volumes attached to containers to hold the data 
+
+    Used to store and hold data across containers 
+    
+ Review:
+
+ Docker Engine: application that consists of 1) daemon, 2) api, 3) client
+
+  Docker daemon: server that manages the images, containers, networks and volumes
+
+  Docker client: user interface for Docker. Client is command line interface (CLI) 
+
+  Client communicates with the daemon through the command line API 
+
+  Use Docker Engine to create and run containers 
+
+Docker Image: instructions for creating a container. Includes file system and parameters used for the container 
+
+  Images comprised of multiple layers. Each layer contains specific software 
+
+  Can create a custom Docker image for specific application. 
+
+  Ex. standardized parent image as base layer 
+
+  Parent image - file system of a particular operating system (ex Ubuntu 18.04) Then add additional layer to the image. 
+
+  Can add application files to the additional layer. 
+
+  Can add multiple layers and distribute application files across different layers. 
+
+
+Docker Container: runnable instance of an image; an implementation of the Docker image. Multiple containers can be created from the sam eimage 
+
+Docker Registry: Docker images can be stored and distributed using a Docker registry. 
+
+Docker Hub: public registry with many images to use 
+
+Summary:
+
+Docker Engine: application consisting of daemon, API, client 
+
+  Docker Daemon: server managing images, containers, networks, and volumes
+
+  Docker Client: command line interface 
+
+Docker Image: instructions for creating a container (file system/parameters)
+
+Docker Container: implementation of  Docker image; runnable instance of a Docker Image 
+
+Docker Registry: Repository of Docker images  
+
+**
+
+To create a container: 
+  
+  Dockerfile -> Docker Image -> Docker Container 
+
+  1. Write a Dockerfile 
+
+    text document containing commands user would execute on command line to assemble an image. 
+
+    specify the necessary environments and dependencies. 
+
+    Ex 
+    # Pull the "tomcat" image. The community maintains this image. 
+FROM tomcat 
+# Copy all files present in the current folder to the "/usr/local/tomcat/webapps"  folder 
+COPY ./*.* /usr/local/tomcat/webappsa
+
+  Every time create a container, it will have tomcat web server installed 
+
+  All contents of current directory copied to /usr/local/tomcat/webapps folder of eacy container 
+
+Build an Image: 
+
+  docker build: build an image from the Dockerfile 
+
+  execute the command from same directory where dockerfile is present 
+
+  # This command will look for a Dockerfile in the `pwd`, and create myImage
+  docker build --tag myImage [OPTIONS] path_where_to_store_the_image
+
+  can store images online at DockerHub so that anyone can "pull" the image on any other machine, anytime 
+
+  docker pull tomcat:latest 
+
+Create an run a Container:
+
+  After creating an image can use it to create as many Containers as want on any platform. Each container has the same environment/dependencies to run a copy of the application. 
+
+# creates and runs a new container:
+docker run --name myContainer myImage 
+
+Summary:
+
+Create a container: Dockerfile, Docker Image, Docker Container 
+
+  1. Write a Dockerfile: text document with commands executed on command line to assemble the image.
+
+  2. Build the image: build the image from the Dockerfile 
+    docker build --tag myImage [OPTIONS] path_to_where_to_store_image
+
+    Can pull container from registry: docker pull tomcat:lastest
+
+  3. Create and run a Container: use image to create the container 
+
+    docker run --name myContainer myImage 
+
+***To create a container, create a Dockerfile to create a Docker Image and use Docker Image to create a Docker Container***
+
+Docker Hub: largest Docker image registry
+
+Python images, flask, running databases etc 
+
+**
+
+Docker text files: text files to define Docker images
+  Contain commands used to define a source or parent image
+  Copy files to the image 
+  Install software on the image 
+  Define the application 
+
+Dockerfile -> docker build -> Docker Image 
+Docker Image -> docker run -> Docker Container 
+
+
+Dockerfile Command Glossary
+
+
+Dockerfile comments start with #.
+FROM defines source image upon which the image will be based.
+COPY copies files to the image.
+WORKDIR defines the working directory for other commands.
+RUN is used to run commands other than the main executable.
+ENTRYPOINT is used to define the main executable.
+
+REVIEW
+Docker Container: ephemeral application that is deployed as one unit 
+
+Docker Image: application and it's dependencies
+
+Dockerfile: Instructions on how to translate application code into an image 
+
+Docker Registry: application that stores/lets you distribute Docker images 
+
+Create a Dockerfile
+Build a Dockerfile to create the Docker Image 
+Run the Docker Image to create and start the Docker Container 
+
+Final Project overview:
+
+CI/CD pipeline (AWS Codebuild + Code Pipeline).
+
+
