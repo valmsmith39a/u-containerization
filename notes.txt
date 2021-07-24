@@ -336,8 +336,229 @@ Create a Dockerfile
 Build a Dockerfile to create the Docker Image 
 Run the Docker Image to create and start the Docker Container 
 
-Final Project overview:
+Lesson Summary 
+Containers/Docker container system 
+Bundling applications and dependencies 
+Docker files are used to define Docker Images and Docker Images are run to instantiate containers.
 
-CI/CD pipeline (AWS Codebuild + Code Pipeline).
+Build and run containers from these files.
+
+Next: Deploying Containers
+
+**
+DEPLOYMENT:
+
+Deployment: the process of making the application run on the production environment (group of servers/virtual machines/containers on-premise/on-cloud). 
+
+Deploying containerized applications 
+
+Container orchestration with Kubernetes 
+
+Kubernetes cluster 
+
+Continuous Integration and Continuous Delivery 
+
+Docker containers: tool to bundle your application with it's environment and dependencies 
+
+Deploy your container to the cloud 
+
+Container orchestration: 
+  manage scaling: new container instances/shutting them down - use a container orchestration service. 
+
+  orchestration service
+    auto-scaling of containers 
+    balance loads 
+    check health 
+    manage container's lifecycle (instantiatig, scaling on multiple hosts, configuring, networking etc)
+
+CI/CD pipeline: set of software deployment practice that automatically prepares code and deploys it into the production environment. 
+
+  Automated code compilation 
+  Running tests 
+  Formulating a build 
+  Deploying the build to the target infrastructure (servers)
+
+2 stages:
+  Continuous Integration (Build): automated compile, test and build processes
+  Continuous Delivery (Deploy): deploy application into production environment (automatic deployment for small incremental/frequent releases). 
+
+Continuous Integration: Automatically building and testing the code when changes made 
+
+Continuous Delivery: CI combined with automated deployment 
+
+CI/CD pipeline: has one end associated with a shared repository containing application code. Other is connected to cloud infrastructure. 
+
+Objectives:
+  Deploy containerized app: AWS' Kubernetes service: EKS
+  Set up continuous integration: AWS CodeBuild
+  Create continuous delivery pipeline: AWS CodePipeline 
+
+Kubernetes:
+
+  Manage containers as a group 
+
+Vertical Scaling: increase the resources of the machine 
+  difficult to scale up/down as demand changes 
+  larger machines more expensive than similar resources spread across smaller machines. 
+
+Horizontal Scaling: run multiple instances of the same application across multiple machines, increasing or decreasing the number as demand changes 
+
+  advantages of containerized applications 
+
+  run multiple copies of the same images at once
+
+Kubernetes: container orchestration 
+
+Review:
+
+Vertical Scaling: increase host machine's hardware resources on which container is running. 
+  Challenging to scale up/down as demand changes 
+  Larger host machines more expensive than smaller machines - loss if machine underutilized. 
+
+Horizontal Scaling: run multiple instances of the same application across multiple machines 
+  run multiple containers based on the same image 
+
+Previously containerized application locally;
+
+  limitations:
+    scaling: cannot automatically scale up/down resources (number of containers) or application usage requirements based on incoming traffic 
+
+    updates: managing patch/update in application that has been scaled up horizontally on multiple hosts
+
+    elasticity: local computers / on-premise servers may not have the hardware requirements for running many computers in parallel 
+
+Kubernetes handles autoscaling problems 
+Elastic (unlimited) resources on the cloud handles elasticity problems 
+
+Kubernetes:
+  one of most popular orchestration system for containers (developed by Google) 
+
+  automate many of the manual operations of deployment / scaling of containerized application. 
+
+  benefits:
+    ease of scaling container instances up / down to meet varying demands 
+
+    balance loads, perform health checks 
+
+    helps setting up inter-container communication (networking) 
+
+    high available architecture
+
+    auto-scaling
+
+    rich econsystem 
+
+    service discovery 
+
+    container health management 
+
+    secrets and configuration management 
+
+ Kubernetes:
+
+  Kubernetes cluster: group of machines running Kubernetes 
+
+  Master: system which controls a Kubernetes cluster. Interact with master when communicate with a cluster. 
+    api, scheduler, management daemon
+
+  Nodes: Machines in a cluster - virtual/physical 
+
+  Pods: Smallest unit in a cluster. logical group of containers on a node that runs a particular application. 
+    Pod has one or more containers, shared resources, unique IP address 
+
+    Containers within a pod share namespace/filesystem volumes 
+
+    Pods not persisten - brought up/down during scaling
+
+ Kubernetes Cluster Architecture: 
+
+  Several node machines for running containerized applications. 
+
+  Master manages the nodes 
+
+  Each node runs multiple pods (groups of containers) 
+
+  Each node has a container runtime (Docker) installed on it 
+
+  Nodes managed by Master system. Each node *must* have a container runtime such as Docker 
+
+  A node can host multiple Pods. 
+
+  The Pods run independent modules of an application 
+
+  Pods replicated across multiple nodes 
+
+Reliability:
+  Pods run specific module of an application (App A, B...)
+
+  Pods not attached to a specific node. Multiple nodes host similar Pods 
+
+  Mitigates single point of failure to provide high availability.
+
+All pods running the same application share storage resources. All containers within pod share namespaces/filesystem volumnes. 
+
+Volumes attached to pods to store data. 
+
+Kubernetes service: persistent way to communicate with ephemeral pods - higher level service abstraction provided. 
+
+Review:
+
+Kubernetes Cluster: group of machines (nodes) running Kubernetes
+
+Nodes: Machines in a cluster 
+
+Master: system to control the Kubernetes cluster 
+
+Pods: Groups of containers (smallest unit in a cluster), shared storage resources, unique IP address. 
+
+App service: interact with pods. Ex App A service interacts with all Pods running App A. Those pods can be on different nodes. 
+
+Can attach Volume to those pods 
+
+**
+Container: abstraction of application and it's dependencies 
+
+Kubernetes pod: abstraction of multiple containers 
+
+Kubernetes Service: abstraction of pods and their interfaces 
+
+Wrap pods as a service because don't care when pods are destroyed 
+
+** 
+High level Kubernetes work flow 
+
+1. Create a Kubernetes Cluster 
+
+2. Deploy an application into the cluster
+
+3. Expose application ports 
+
+4. Scaling an application 
+
+5. Updating an application 
+
+How to set up a Kubernetes cluster? 
+1. Set up a local cluster (Docker Desktop).
+2. Provision a cloud cluster.
+
+***
+Master system is a control plane comprising: 
+  kube-controller-manager
+  kube-apiserver: api server exposing Kubernets API
+    HTTP API allows end-users, cluster, external components to communicate
+    Allows querying/manipulating state of API objects (Pods, Namespaces, ConfgMaps/Events)
+  etcd: key-value store of cluster data 
+  kube-scheduler: monitors pods, assigns worker node to newly created pods 
+  cloud-controller-manager: embeds control logic/link cluster to cloud provider's API 
+
+Node: 
+  pod
+  kube-proxy: mantains network rules on nodes for network communication to pods from network session inside/outside cluster 
+  kubelet: agent on each node that tracks containers are running in correct pod.  container runtime: ex Docker, to run the containers 
+
+
+
+Control plane: manages worker nodes and Pods in a cluster 
+  decides when to start up a new pod or schedule events 
 
 
